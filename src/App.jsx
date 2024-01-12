@@ -1,28 +1,62 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
 import {useState, useEffect} from "react";
 import useFetch from "./hooks/useFetch.js"
+import WeatherContainer from "./components/WeatherContainer.jsx";
+import Search from './components/Search.jsx';
+import {ClimbingBoxLoader} from "react-spinners"
 
 function App() {
-  const [lat, setLat] = useState([]);
-  const [lon, setLon] = useState([]);
-  const {get} = useFetch("https://api.openweathermap.org/data/3.0/onecall?");
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(position => {
-      setLat(position.coords.latitude);
-      setLon(position.coords.longitude);
-    })
-    console.log("Latitude is: " + lat);
-    console.log("Longitude is: " + lon);
-    get(`lat=${lat}&lon=${lon}&appid=a3922a83619e594c3616ce14fdd99a34`)
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-  }, [lat, lon, get])
-  
+  const [data, setData] = useState([]);
+  const [location, setLocation] = useState("Stockholm");
+  const [loading, setLoading] = useState(true);
+  const {get} = useFetch("https://api.openweathermap.org");
 
+  const handleLocationChange = (newLocation) => {
+    console.log(newLocation);
+    setLocation(newLocation);
+    //Kommer hantera när platsen ändras. 
+  }
+  useEffect(() => {
+    setLoading(true);
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   setLat(position.coords.latitude);
+    //   setLon(position.coords.longitude);
+    // })
+    const fetchCoords = async() => {
+      const json = await get(`/geo/1.0/direct?q=${location}&limit=1&appid=a3922a83619e594c3616ce14fdd99a34`)
+        .catch(error => console.log(error))
+      const lat = json[0].lat
+      const lon = json[0].lon
+      console.log("Latitude is: " + lat);
+      console.log("Longitude is: " + lon);
+  
+      return {lat, lon}
+    }
+    const fetchData = async(coords) => { 
+      const weatherData = await get(`/data/3.0/onecall?units=metric&lat=${coords.lat}&lon=${coords.lon}&appid=a3922a83619e594c3616ce14fdd99a34`)
+        .catch(error => console.log(error))
+      return weatherData
+    }
+    const fetchBoth = async() => {
+      const coords = await fetchCoords();
+      const weatherData = await fetchData(coords);
+      console.log(weatherData);
+      setData(weatherData);
+    }
+    fetchBoth();
+    console.log(data);
+    setLoading(false);
+    //Borde köras varje gång som platsen ändras. 
+  }, [location])
+  
   return (
     <>
-      <h1>Success</h1>
+      {<Search onClick={handleLocationChange} />}
+      {loading ? <ClimbingBoxLoader color="blue"/> : <WeatherContainer>{data}</WeatherContainer>}
     </>
+      
+    
   )
 }
 
