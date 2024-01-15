@@ -2,6 +2,8 @@ import { Stack, Typography, Box, Grid } from "@mui/material";
 import svgPicker from "../helpers/svgPicker";
 import WeatherDetail from "./WeatherDetail/WeatherDetail";
 import DateFormatter from "../helpers/DateFormatter";
+import Hourly from "./Hourly/Hourly";
+import Daily from "./Daily/Daily";
 
 
 const WeatherContainer = (props) => {
@@ -11,18 +13,18 @@ const WeatherContainer = (props) => {
     const current = new Date((props.data.current.dt + props.data.timezone_offset)* 1000)
     return (
         <>
-            <Typography sx={{margin:"20px"}} textAlign="center" variant="h1">{props.location} - {dateFormatter.SunDate(current)}</Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={7}>
+            <Typography sx={{margin:"10px"}} textAlign="center" variant="h2">{props.location} - {dateFormatter.SunDate(current)}</Typography>
+            <Grid container spacing={1}>
+                <Grid item xs={12} md={6}>
                     <Stack direction="row" sx={{alignContent:"center", justifyContent:"center"}} spacing={2}>
                         <Box component="img" src={svgPicker(props.data.current.weather[0].icon)} sx={{width: "200px", height: "200px"}}/>
                         <Stack direction="column"  spacing={2} sx={{justifyContent:"center"}}>
                             <Typography sx={{paddingTop: "15px"}} variant="h2">{props.data.current.temp}&deg;C</Typography>
-                            <Typography variant="body1">{props.data.current.weather[0].description}</Typography>
+                            <Typography variant="h6" paragraph>{props.data.current.weather[0].description}</Typography>
                         </Stack>
                     </Stack>
                 </Grid>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={6}>
                     <Stack direction="column"  spacing={2} sx={{marginTop:"30px"}}>
                         <Stack direction="row" sx={{justifyContent:"space-around"}}>
                             <Stack direction="row" spacing={2}>
@@ -48,18 +50,20 @@ const WeatherContainer = (props) => {
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Typography variant="body1" sx={{justifySelf:"flex-end", alignSelf:"flex-end"}} textAlign="end">Feels like {props.data.current.feels_like}&deg;C</Typography>
+                        <Typography variant="h6" paragraph sx={{justifySelf:"flex-end", alignSelf:"flex-end"}} textAlign="end">Feels like {props.data.current.feels_like}&deg;C</Typography>
                     </Stack>
                 </Grid>
                 <WeatherDetail img={svgPicker("riskOfRain")} data={props.data.daily[0].pop * 100} type="Risk of rain" />
                 <WeatherDetail img={svgPicker("arrow")} data={props.data.current.wind_speed} degrees={props.data.current.wind_deg} type="Wind" />
                 <WeatherDetail img={svgPicker("sunrise")} data={dateFormatter.SunDate(sunrise)} type="Sunrise" />
                 <WeatherDetail img={svgPicker("sunset")} data={dateFormatter.SunDate(sunset)} type="Sunset" />
-                <Grid item xs={12} md={3}>UV Index</Grid>
-                <Grid item xs={12} md={3}>Pressure</Grid>
-                <Grid item xs={12} md={3}>Humidity</Grid>
-                <Grid item xs={12} md={3}>Wind</Grid>
+                <WeatherDetail img={svgPicker("uvindex")} data={props.data.current.uvi} type="UV index" />
+                <WeatherDetail img={svgPicker("pressure")} data={props.data.current.pressure} type="Pressure" />
+                <WeatherDetail img={svgPicker("humidity")} data={props.data.current.humidity} type="Humidity" />
+                <WeatherDetail img={svgPicker("dewpoint")} data={props.data.current.dew_point} type="Dew point" />
             </Grid>
+            <Hourly data={props.data} />
+            <Daily data={props.data} />
             {/* <Stack direction="row">
                 <Stack direction="row">
                     <Wallet sx={{width: "100px", height: "100px"}}/>

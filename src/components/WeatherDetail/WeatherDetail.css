@@ -8,7 +8,8 @@
 
 }
 
-.weather-detail-info {
+.weather-detail-box .weather-detail-info {
     font-weight: bold;
     align-self: center;
+    margin-top: 15px;
 }
