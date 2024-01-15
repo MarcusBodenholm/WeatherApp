@@ -1,0 +1,14 @@
+.weather-detail-box {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.weather-detail-title {
+    align-self: center;
+
+}
+
+.weather-detail-info {
+    font-weight: bold;
+    align-self: center;
+}
