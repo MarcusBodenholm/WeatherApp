@@ -9,7 +9,7 @@ const Hourly = props => {
             <Typography variant="h4" className="hourly-title">Hour by hour</Typography>
             <Grid container spacing={1} columns={16} sx={{justifyContent:"center"}}>
                 {props.data.hourly.slice(1, 21).map((hour,idx) => {
-                    return <HourCard data={hour} tzo={props.data.timezone_offset} key={idx}/>
+                    return <HourCard data={hour} key={idx}/>
                 })}
             </Grid>
         </Stack>

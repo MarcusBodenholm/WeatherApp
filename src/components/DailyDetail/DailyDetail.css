@@ -1,0 +1,15 @@
+.daily-detail-box {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.daily-detail-title {
+    align-self: center;
+
+}
+
+.daily-detail-box .daily-detail-info {
+    font-weight: bold;
+    align-self: center;
+    margin-top: 15px;
+}

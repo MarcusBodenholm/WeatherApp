@@ -4,7 +4,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import "./WeatherDetail.css"
 
 const TypeCreator = (data) => {
-    console.log(data)
     return <Typography variant="h5" className="weather-detail-info"  paragraph>{data}</Typography>
 }
 

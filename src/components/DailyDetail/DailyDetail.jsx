@@ -1,0 +1,40 @@
+import "./DailyDetail.css"
+import { Typography, Box, Stack } from "@mui/material"
+
+const TypeCreator = (data) => {
+    return <Typography variant="h5" className="weather-detail-info"  paragraph>{data}</Typography>
+}
+
+
+
+const DailyDetail = props => {
+    const typeMap = {
+        "Risk of rain": () => TypeCreator(`${props.data}%`),
+        "Wind": () => TypeCreator(`${props.data} m/s`),
+        "Sunrise": () => TypeCreator(`${props.data}`),
+        "Sunset": () => TypeCreator(`${props.data}`),
+        "UV index": () => TypeCreator(`${props.data}`),
+        "Pressure": () => TypeCreator(`${props.data} hPa`),
+        "Humidity": () => TypeCreator(`${props.data}%`),
+        "Dew point": () => TypeCreator(`${props.data}\u00B0C`)
+    }
+    let image = <Box component="img" src={props.img} sx={{width: "30px", height:"30px"}}/>
+    if (props.degrees) {
+        image = <Box component="img" src={props.img} sx={{width: "30px", height:"30px", transform: `rotate(${props.degrees}deg)`}}/>
+    }
+
+
+    return (
+    <Stack direction="row" >
+        <Stack direction="row" className="daily-detail-box">
+            <Stack direction="row" spacing={1}>
+                {image}
+                <Typography color="secondary" className="daily-detail-title" >{props.type}</Typography>
+            </Stack>
+            {typeMap[props.type]()}
+        </Stack>
+    </Stack>
+)
+}
+
+export default DailyDetail;

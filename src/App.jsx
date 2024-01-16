@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 import useFetch from "./hooks/useFetch.js"
 import WeatherContainer from "./components/WeatherContainer/WeatherContainer.jsx";
-import {ClimbingBoxLoader, HashLoader} from "react-spinners"
+import {HashLoader} from "react-spinners"
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DarkTheme, LightTheme } from './theme/theme';
 import { Container, ThemeProvider, CssBaseline } from "@mui/material";
@@ -15,7 +15,8 @@ function App() {
     const [data, setData] = useState(dummyWeatherData);
     const [location, setLocation] = useState("Stockholm");
     const [loading, setLoading] = useState(true);
-    const {get} = useFetch("https://api.openweathermap.org");
+    const WeatherAPI = useFetch("https://api.openweathermap.org");
+    const LocationAPI = useFetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=")
 
     const handleLocationChange = (newLocation) => {
         console.log(newLocation);
@@ -32,8 +33,13 @@ function App() {
         //   setLon(position.coords.longitude);
         // })
         const fetchCoords = async() => {
-            const json = await get(`/geo/1.0/direct?q=${location}&limit=1&appid=a3922a83619e594c3616ce14fdd99a34`)
+            const json = await LocationAPI.get(location)
             .catch(error => console.log(error))
+            if (json[0].lat === undefined) {
+                throw new Error("Location could not be found. Please try again.")
+            }
+            console.log(json)
+
             const lat = json[0].lat
             const lon = json[0].lon
             console.log("Latitude is: " + lat);
@@ -42,7 +48,7 @@ function App() {
             return {lat, lon}
         }
         const fetchData = async(coords) => { 
-            const weatherData = await get(`/data/3.0/onecall?units=metric&lat=${coords.lat}&lon=${coords.lon}&appid=a3922a83619e594c3616ce14fdd99a34`)
+            const weatherData = await WeatherAPI.get(`/data/3.0/onecall?units=metric&lat=${coords.lat}&lon=${coords.lon}&appid=a3922a83619e594c3616ce14fdd99a34`)
             .catch(error => console.log(error))
             return weatherData
         }

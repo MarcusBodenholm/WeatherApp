@@ -13,7 +13,7 @@ const HeaderBar = props => {
                         <Box onClick={() => props.darkModeClick()} sx={{alignSelf: "center", justifySelf:"center", cursor:"pointer"}}>
                             {props.darkMode ? <DarkMode/>  : <LightMode />}
                         </Box>
-                        <SearchBar onClick={() => props.handleLocationChange()} />
+                        <SearchBar onClick={props.handleLocationChange} />
                     </Stack>
                 </Toolbar>
             </AppBar>

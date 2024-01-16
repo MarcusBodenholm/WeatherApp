@@ -5,8 +5,7 @@ import "./HourCard.css"
 
 const HourCard = props => {
     const dateFormatter = DateFormatter();
-    const date = new Date((props.data.dt + props.tzo) * 1000);
-    console.log(props)
+    const date = new Date((props.data.dt) * 1000);
     return (
         <Grid item>
             <Card className="hour-card" sx={{borderRadius:"10px"}}>

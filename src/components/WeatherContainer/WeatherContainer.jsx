@@ -8,12 +8,12 @@ import "./WeatherContainer.css";
 
 const WeatherContainer = (props) => {
     const dateFormatter = DateFormatter();
-    const sunrise = new Date((props.data.current.sunrise + props.data.timezone_offset) * 1000)
-    const sunset = new Date((props.data.current.sunset + props.data.timezone_offset) * 1000)
+    const sunrise = new Date((props.data.current.sunrise) * 1000)
+    const sunset = new Date((props.data.current.sunset) * 1000)
     const current = new Date((props.data.current.dt)* 1000)
     return (
         <>
-            <Typography sx={{marginTop:"15px"}} textAlign="center" variant="h5">{dateFormatter.FullDate(current)}</Typography>
+            <Typography sx={{marginTop:"15px"}} textAlign="center" variant="h5">{dateFormatter.WeekdayAndMonth(current)} {dateFormatter.FullTime(current)}</Typography>
             <Typography sx={{marginBottom:"5px"}} textAlign="center" variant="h2">{props.location}</Typography>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
@@ -21,7 +21,7 @@ const WeatherContainer = (props) => {
                         <Box component="img" src={svgPicker(props.data.current.weather[0].icon)} sx={{width: "200px", height: "200px"}}/>
                         <Stack direction="column"  spacing={2} sx={{justifyContent:"center"}}>
                             <Typography sx={{paddingTop: "15px"}} variant="h2">{props.data.current.temp}&deg;C</Typography>
-                            <Typography variant="h6" paragraph>{props.data.current.weather[0].description}</Typography>
+                            <Typography variant="subtitle1" paragraph>{props.data.daily[0].summary}</Typography>
                         </Stack>
                     </Stack>
                 </Grid>

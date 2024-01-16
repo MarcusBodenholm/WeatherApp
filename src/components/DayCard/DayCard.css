@@ -2,3 +2,14 @@
     background-color: rgba(51, 98, 171, 0.24);
     min-width: 100px;
 }
+
+.popover {
+    width: 200px;
+    height: 200px;
+}
+.active {
+    border: 3px solid orange;
+}
+.info-button {
+    justify-self: flex-end;
+}
