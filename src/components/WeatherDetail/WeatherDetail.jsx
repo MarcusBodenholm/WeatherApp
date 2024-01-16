@@ -32,7 +32,7 @@ const WeatherDetail = props => {
                     <Stack direction="row" className="weather-detail-box">
                         <Stack direction="row" spacing={1}>
                             {image}
-                            <Typography color="secondary" textAlign="center" className="weather-detail-title" >{props.type}</Typography>
+                            <Typography color="secondary" className="weather-detail-title" >{props.type}</Typography>
                         </Stack>
                         {typeMap[props.type]()}
                     </Stack>
@@ -43,11 +43,11 @@ const WeatherDetail = props => {
         )
     }
     return (
-        <Grid item xs={12} sm={4} md={3}>
+        <Grid item xs={12} sm={4} md={3} sx={{display: "flex", justifyContent:"center"}}>
             <Stack direction="row" spacing={1} >
                 {image}
                 <Stack direction="column">
-                    <Typography color="secondary" className="weather-detail-title" >{props.type}</Typography>
+                    <Typography color="secondary">{props.type}</Typography>
                     {typeMap[props.type]()}
                 </Stack>
             </Stack>

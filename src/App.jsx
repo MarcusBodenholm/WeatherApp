@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect} from "react";
 import useFetch from "./hooks/useFetch.js"
-import WeatherContainer from "./components/WeatherContainer.jsx";
-import SearchBar from './components/SearchBar.jsx';
+import WeatherContainer from "./components/WeatherContainer/WeatherContainer.jsx";
+import SearchBar from './components/SearchBar/SearchBar.jsx';
 import {ClimbingBoxLoader} from "react-spinners"
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DarkTheme, LightTheme } from './theme/theme';
@@ -75,7 +75,7 @@ function App() {
             </Toolbar>
         </AppBar>
 
-        <Container >
+        <Container sx={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
             {loading ? <ClimbingBoxLoader size={50} style={{color: theme.palette.primary}} /> : <WeatherContainer data={data} location={location}></WeatherContainer>}
 
         </Container>

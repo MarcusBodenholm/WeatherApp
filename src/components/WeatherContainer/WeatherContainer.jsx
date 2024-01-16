@@ -1,10 +1,10 @@
 import { Stack, Typography, Box, Grid } from "@mui/material";
-import svgPicker from "../helpers/svgPicker";
-import WeatherDetail from "./WeatherDetail/WeatherDetail";
-import DateFormatter from "../helpers/DateFormatter";
-import Hourly from "./Hourly/Hourly";
-import Daily from "./Daily/Daily";
-
+import svgPicker from "../../helpers/svgPicker";
+import WeatherDetail from "../WeatherDetail/WeatherDetail";
+import DateFormatter from "../../helpers/DateFormatter";
+import Hourly from "../Hourly/Hourly";
+import Daily from "../Daily/Daily";
+import "./WeatherContainer.css";
 
 const WeatherContainer = (props) => {
     const dateFormatter = DateFormatter();
@@ -26,7 +26,7 @@ const WeatherContainer = (props) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Stack direction="column"  spacing={2} sx={{marginTop:"30px"}}>
-                        <Stack direction="row" sx={{justifyContent:"space-around"}}>
+                        <Stack direction="row" sx={{justifyContent:"center"}}>
                             <Stack direction="row" spacing={2}>
                                 <Box component="img" src={svgPicker("mintemp")} sx={{width: "100px", height: "100px"}}/>
                                 <Stack direction="column" sx={{justifyContent:"center"}}>
@@ -50,7 +50,7 @@ const WeatherContainer = (props) => {
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Typography variant="h6" paragraph sx={{justifySelf:"flex-end", alignSelf:"flex-end"}} textAlign="end">Feels like {props.data.current.feels_like}&deg;C</Typography>
+                        <Typography variant="h6" className="feels-like" paragraph sx={{justifySelf:"flex-end", alignSelf:"flex-end"}}>Feels like {props.data.current.feels_like}&deg;C</Typography>
                     </Stack>
                 </Grid>
                 <WeatherDetail img={svgPicker("riskOfRain")} data={props.data.daily[0].pop * 100} type="Risk of rain" />
@@ -64,15 +64,6 @@ const WeatherContainer = (props) => {
             </Grid>
             <Hourly data={props.data} />
             <Daily data={props.data} />
-            {/* <Stack direction="row">
-                <Stack direction="row">
-                    <Wallet sx={{width: "100px", height: "100px"}}/>
-                    <Stack direction="column">
-                        <Typography variant="h3">{props.data.current.temp}&deg;C</Typography>
-                        <Typography variant="body1">{props.data.current.weather[0].description}</Typography>
-                    </Stack>
-                </Stack>
-            </Stack> */}
         </>
     )
 }

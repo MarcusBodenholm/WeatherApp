@@ -8,7 +8,7 @@ const HourCard = props => {
     const date = new Date((props.data.dt + props.tzo) * 1000);
     console.log(props)
     return (
-        <Grid item sx={1}>
+        <Grid item>
             <Card className="hour-card" sx={{borderRadius:"10px"}}>
                 <CardContent>
                     <Stack direction="column" spacing={1} sx={{justifyContent:"center", alignItems:"center"}}>

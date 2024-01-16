@@ -38,15 +38,23 @@ const Search = styled('div')(({ theme }) => ({
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
       [theme.breakpoints.up('sm')]: {
-        width: '50ch',
+        width: '30ch',
         '&:focus': {
-          width: '100ch',
+          width: '50ch',
           border: 'black solid 4px',
           borderRadius: '5px'
         },
       },
-    },
-  }));
+      [theme.breakpoints.up('md')]: {
+        width: '50ch',
+        '&:focus': {
+          width: '80ch',
+          border: 'black solid 4px',
+          borderRadius: '5px'
+        },
+        
+      }
+  }}));
   
 
 const SearchBar = props => {
