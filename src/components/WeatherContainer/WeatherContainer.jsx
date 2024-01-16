@@ -10,10 +10,11 @@ const WeatherContainer = (props) => {
     const dateFormatter = DateFormatter();
     const sunrise = new Date((props.data.current.sunrise + props.data.timezone_offset) * 1000)
     const sunset = new Date((props.data.current.sunset + props.data.timezone_offset) * 1000)
-    const current = new Date((props.data.current.dt + props.data.timezone_offset)* 1000)
+    const current = new Date((props.data.current.dt)* 1000)
     return (
         <>
-            <Typography sx={{margin:"10px"}} textAlign="center" variant="h2">{props.location} - {dateFormatter.SunDate(current)}</Typography>
+            <Typography sx={{marginTop:"15px"}} textAlign="center" variant="h5">{dateFormatter.FullDate(current)}</Typography>
+            <Typography sx={{marginBottom:"5px"}} textAlign="center" variant="h2">{props.location}</Typography>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
                     <Stack direction="row" sx={{alignContent:"center", justifyContent:"center"}} spacing={2}>
@@ -50,7 +51,7 @@ const WeatherContainer = (props) => {
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Typography variant="h6" className="feels-like" paragraph sx={{justifySelf:"flex-end", alignSelf:"flex-end"}}>Feels like {props.data.current.feels_like}&deg;C</Typography>
+                        <Typography variant="h6" className="feels-like" paragraph sx={{justifySelf:"center", alignSelf:"center"}}>Feels like {props.data.current.feels_like}&deg;C</Typography>
                     </Stack>
                 </Grid>
                 <WeatherDetail img={svgPicker("riskOfRain")} data={props.data.daily[0].pop * 100} type="Risk of rain" />

@@ -2,14 +2,12 @@
 import {useState, useEffect} from "react";
 import useFetch from "./hooks/useFetch.js"
 import WeatherContainer from "./components/WeatherContainer/WeatherContainer.jsx";
-import SearchBar from './components/SearchBar/SearchBar.jsx';
-import {ClimbingBoxLoader} from "react-spinners"
+import {ClimbingBoxLoader, HashLoader} from "react-spinners"
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { DarkTheme, LightTheme } from './theme/theme';
-import { AppBar, Checkbox, Container, ThemeProvider, Toolbar, Typography, Box, CssBaseline, Stack } from "@mui/material";
+import { Container, ThemeProvider, CssBaseline } from "@mui/material";
 import dummyWeatherData from "./DummyData.js";
-import { DarkMode, LightMode } from "@mui/icons-material";
-
+import HeaderBar from "./components/HeaderBar/HeaderBar.jsx";
 
 function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
@@ -23,6 +21,9 @@ function App() {
         console.log(newLocation);
         setLocation(newLocation);
         //Kommer hantera när platsen ändras. 
+    }
+    const handleDarkModeChange = () => {
+        setDarkMode(!useDarkMode);
     }
     useEffect(() => {
         setLoading(true);
@@ -60,23 +61,10 @@ function App() {
     return (
     <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar position="relative">
-            <Toolbar sx={{justifySelf: "center", alignSelf:"center", flexDirection: "column", gap:"10px", width:"100%"}}>
-                <Typography variant="h3" align="center" >Weather App</Typography>
-                <Stack spacing={2} direction="row">
-                    <Box onClick={() => setDarkMode(!useDarkMode)} sx={{alignSelf: "center", justifySelf:"center", cursor:"pointer"}}>
-                        {useDarkMode ? <DarkMode/>  : <LightMode />}
-                    </Box>
-                    {/* <Checkbox checked={useDarkMode} onChange={() => setDarkMode(!useDarkMode)}></Checkbox> */}
-                    <SearchBar onClick={handleLocationChange} />
-                </Stack>
-                
-
-            </Toolbar>
-        </AppBar>
+        <HeaderBar darkModeClick={handleDarkModeChange} darkMode={useDarkMode} handleLocationChange={handleLocationChange} />
 
         <Container sx={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
-            {loading ? <ClimbingBoxLoader size={50} style={{color: theme.palette.primary}} /> : <WeatherContainer data={data} location={location}></WeatherContainer>}
+            {loading ? <HashLoader size={200} color={ useDarkMode ? "#36d7b7" : "#000000"} style={{}}/> : <WeatherContainer data={data} location={location}></WeatherContainer>}
 
         </Container>
     </ThemeProvider>
