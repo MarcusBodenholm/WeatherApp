@@ -11,5 +11,10 @@
 .daily-detail-box .daily-detail-info {
     font-weight: bold;
     align-self: center;
-    margin-top: 15px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.daily-detail-box .daily-detail-wind {
+    margin-left: 5px;
 }

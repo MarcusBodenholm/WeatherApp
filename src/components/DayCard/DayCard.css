@@ -3,13 +3,24 @@
     min-width: 100px;
 }
 
+.MuiGrid-root .day-card-flipped {
+    background-color: rgba(51, 98, 171, 0.40);
+    min-width: 100px;
+    border: 2px solid orange;
+}
+
 .popover {
     width: 200px;
     height: 200px;
 }
-.active {
-    border: 3px solid orange;
-}
+
 .info-button {
     justify-self: flex-end;
+    margin-top: 2px;
+    margin-right: 2px;
+}
+.active {
+    margin-top: 0px;
+    margin-right: 0px;
+    border: 3px solid orange;
 }
