@@ -9,14 +9,14 @@ const TypeCreator = (data) => {
 
 const WeatherDetail = props => {
     const typeMap = {
-        "Risk of rain": () => TypeCreator(`${props.data}%`),
+        "Risk of rain": () => TypeCreator(`${Math.round(props.data)}%`),
         "Wind": () => TypeCreator(`${props.data} m/s`),
         "Sunrise": () => TypeCreator(`${props.data}`),
         "Sunset": () => TypeCreator(`${props.data}`),
         "UV index": () => TypeCreator(`${props.data}`),
-        "Pressure": () => TypeCreator(`${props.data} hPa`),
-        "Humidity": () => TypeCreator(`${props.data}%`),
-        "Dew point": () => TypeCreator(`${props.data}\u00B0C`)
+        "Pressure": () => TypeCreator(`${Math.round(props.data)} hPa`),
+        "Humidity": () => TypeCreator(`${Math.round(props.data)}%`),
+        "Dew point": () => TypeCreator(`${Math.round(props.data)}\u00B0C`)
     }
     let image = <Box component="img" src={props.img} sx={{width: "50px", height:"50px"}}/>
     if (props.degrees) {

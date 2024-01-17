@@ -48,13 +48,13 @@ const DayCard = props => {
                                     <Box component="img"  src={svgPicker(props.data.weather[0].icon)} sx={{width: "100px", height:"100px"}} />
                                     <Stack direction="column" sx={{width:"100%"}}>
                                         <Typography variant="h6" >{dateFormatter.WeekdayAndMonth(date)}</Typography>
-                                        <Stack direction="row" sx={{width:"100%", justifyContent:"space-between", margin:"10px", paddingRight:"10px"}} spacing={1}>
+                                        <Stack direction="row" sx={{width:"100%", justifyContent:"space-around", margin:"10px", paddingRight:"10px"}} spacing={1}>
                                             <Stack direciton="column" sx={{justifyContent:"center"}}>
-                                                <Typography paragraph variant="h6" sx={{marginBottom: "0", fontWeight:"bold"}}>{props.data.temp.min}&deg;C</Typography>
+                                                <Typography paragraph variant="h6" sx={{marginBottom: "0", fontWeight:"bold"}}>{Math.round(props.data.temp.min)}&deg;C</Typography>
                                                 <Typography variant="body1">Min</Typography>
                                             </Stack>
                                             <Stack direciton="column">
-                                                <Typography paragraph variant="h6" sx={{marginBottom: "0", fontWeight:"bold"}}>{props.data.temp.max}&deg;C</Typography>
+                                                <Typography paragraph variant="h6" sx={{marginBottom: "0", fontWeight:"bold"}}>{Math.round(props.data.temp.max)}&deg;C</Typography>
                                                 <Typography variant="body1">Max</Typography>
                                             </Stack>
 

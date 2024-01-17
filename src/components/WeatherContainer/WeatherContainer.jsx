@@ -18,7 +18,7 @@ const WeatherContainer = (props) => {
                     <Stack direction="row" sx={{alignContent:"center", justifyContent:"center"}} spacing={2}>
                         <Box component="img" src={svgPicker(props.data.current.weather[0].icon)} sx={{width: "200px", height: "200px"}}/>
                         <Stack direction="column"  spacing={2} sx={{justifyContent:"center"}}>
-                            <Typography sx={{paddingTop: "15px"}} variant="h2">{props.data.current.temp}&deg;C</Typography>
+                            <Typography sx={{paddingTop: "15px"}} variant="h2">{Math.round(props.data.current.temp)}&deg;C</Typography>
                             <Typography variant="subtitle1" paragraph>{props.data.daily[0].summary}</Typography>
                         </Stack>
                     </Stack>
@@ -33,7 +33,7 @@ const WeatherContainer = (props) => {
                                         Min
                                     </Typography>
                                     <Typography variant="h4">
-                                        {props.data.daily[0].temp.min}&deg;C
+                                        {Math.round(props.data.daily[0].temp.min)}&deg;C
                                     </Typography>
                                 </Stack>
                             </Stack>
@@ -44,12 +44,14 @@ const WeatherContainer = (props) => {
                                         Max
                                     </Typography>
                                     <Typography variant="h4">
-                                        {props.data.daily[0].temp.max}&deg;C
+                                        {Math.round(props.data.daily[0].temp.max)}&deg;C
                                     </Typography>
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Typography variant="h6" className="feels-like" paragraph sx={{justifySelf:"center", alignSelf:"center"}}>Feels like {props.data.current.feels_like}&deg;C</Typography>
+                        <Typography variant="h6" className="feels-like" paragraph sx={{justifySelf:"center", alignSelf:"center"}}>
+                            Feels like {Math.round(props.data.current.feels_like)}&deg;C
+                        </Typography>
                     </Stack>
                 </Grid>
                 <WeatherDetailList data={props.data}/>

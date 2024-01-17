@@ -61,8 +61,8 @@ function App() {
         const fetchCoords = async() => {
             const json = await LocationAPI.get("search?format=json&limit=1&q=" + location)
             .catch(error => console.log(error))
-            if (json[0].lat === undefined) {
-                throw new Error("Location could not be found. Please try again.")
+            if (json.length === 0) {
+                return false;
             }
             const lat = json[0].lat
             const lon = json[0].lon
@@ -75,6 +75,11 @@ function App() {
         }
         const fetchBoth = async() => {
             const coords = await fetchCoords();
+            if (coords === false) {
+                console.log("Location could not be found. Defaulting to Stockholm.")
+                setLocation("Stockholm")
+                return;
+            }
             const weatherData = await fetchData(coords);
             setLoading(false);
             setData(weatherData);
