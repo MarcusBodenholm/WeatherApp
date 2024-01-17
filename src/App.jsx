@@ -13,10 +13,11 @@ function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
     const [useDarkMode, setDarkMode] = useState(prefersDarkMode);
     const [data, setData] = useState(dummyWeatherData);
-    const [location, setLocation] = useState("Stockholm");
+    const [location, setLocation] = useState("");
     const [loading, setLoading] = useState(true);
     const WeatherAPI = useFetch("https://api.openweathermap.org");
-    const LocationAPI = useFetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q=")
+    const LocationAPI = useFetch("https://nominatim.openstreetmap.org/")
+
 
     const handleLocationChange = (newLocation) => {
         console.log(newLocation);
@@ -28,23 +29,43 @@ function App() {
         setDarkMode(!useDarkMode);
     }
     useEffect(() => {
-        
-        // navigator.geolocation.getCurrentPosition(position => {
-        //   setLat(position.coords.latitude);
-        //   setLon(position.coords.longitude);
-        // })
+        let geoLocationFailed = false;
+        const getCurrentPosition = async() => {
+            const coords = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(position => {
+                    resolve(position.coords);
+                },error => reject(error),{timeout: 1000});
+            })
+            .catch(() => geoLocationFailed = true)
+            return coords;
+        }
+        const reverseGeoCode = async() => {
+            const coords = await getCurrentPosition();
+            console.log(coords, "triggered with coords")
+            if (geoLocationFailed) {
+                setLocation("Stockholm");
+                return;
+            }
+            const json = await LocationAPI.get(`reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`)
+            if (json.address === undefined) {
+                setLocation("Stockholm");
+                return;
+            }
+            setLocation(json.address.town)
+    
+        }
+        reverseGeoCode();
+    }, [])
+    useEffect(() => {
+        if (location === "") return;
         const fetchCoords = async() => {
-            const json = await LocationAPI.get(location)
+            const json = await LocationAPI.get("search?format=json&limit=1&q=" + location)
             .catch(error => console.log(error))
             if (json[0].lat === undefined) {
                 throw new Error("Location could not be found. Please try again.")
             }
-            console.log(json)
-
             const lat = json[0].lat
             const lon = json[0].lon
-            console.log("Latitude is: " + lat);
-            console.log("Longitude is: " + lon);
             return {lat, lon}
         }
         const fetchData = async(coords) => { 
@@ -55,12 +76,11 @@ function App() {
         const fetchBoth = async() => {
             const coords = await fetchCoords();
             const weatherData = await fetchData(coords);
-            console.log(weatherData);
             setLoading(false);
             setData(weatherData);
         }
         fetchBoth();
-        console.log(data);
+        console.log("Location is " + location)
         //Borde köras varje gång som platsen ändras. 
     }, [location])
     const theme=  useDarkMode ? DarkTheme : LightTheme
