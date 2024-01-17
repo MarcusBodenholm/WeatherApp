@@ -11,6 +11,7 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
+  
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
@@ -37,28 +38,39 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
+    [theme.breakpoints.down('sm')]: {
+      '&:focus': {
+        borderRadius: '5px',
+        
+      },
+    },
     [theme.breakpoints.up('sm')]: {
       width: '30ch',
       '&:focus': {
         width: '50ch',
-        border: 'black solid 4px',
-        borderRadius: '5px'
+        borderRadius: '5px',
+        
       },
     },
     [theme.breakpoints.up('md')]: {
-      width: '50ch',
+      width: '55ch',
       '&:focus': {
-        width: '80ch',
-        border: 'black solid 4px',
-        borderRadius: '5px'
+        width: '60ch',
+        borderRadius: '5px'      
       },
       
     }
-}}));
+  }
+}));
   
 
 const SearchBar = props => {
   const searchValue = useRef();   
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      props.onClick(searchValue.current.value)
+    }
+  }
   const handleClick = () => {
       if (searchValue.current.value === "") return;
       props.onClick(searchValue.current.value)
@@ -72,6 +84,7 @@ const SearchBar = props => {
               <StyledInputBase
                   id="location-search"
                   autoComplete="city"
+                  onKeyDown={handleEnter}
                   inputRef={searchValue}
                   placeholder="Search for a city"
                   inputProps={{ 'aria-label': 'search' }}

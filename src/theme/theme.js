@@ -1,9 +1,12 @@
 import { createTheme, responsiveFontSizes } from "@mui/material";
 const BaseLightTheme = createTheme({
     palette: {
-        mode: "light",
+        mode: "dark",
         background: {
-            default: "#e1f5fe"
+            default: "rgb(19, 66, 154)"
+        },
+        secondary: {
+            main: "rgb(175, 175, 175)"
         }
     },
     components: {
@@ -14,13 +17,13 @@ const BaseLightTheme = createTheme({
             }
         }
     }
-
 })
+
 const BaseDarkTheme = createTheme({
     palette: {
         mode: "dark",
         background: {
-            default: "rgb(19, 66, 154)"
+            default: "rgb(5, 39, 102)"
         },
         secondary: {
             main: "rgb(175, 175, 175)"

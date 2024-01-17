@@ -20,6 +20,7 @@ function App() {
 
     const handleLocationChange = (newLocation) => {
         console.log(newLocation);
+        setLoading(true);
         setLocation(newLocation);
         //Kommer hantera när platsen ändras. 
     }
@@ -27,7 +28,7 @@ function App() {
         setDarkMode(!useDarkMode);
     }
     useEffect(() => {
-        setLoading(true);
+        
         // navigator.geolocation.getCurrentPosition(position => {
         //   setLat(position.coords.latitude);
         //   setLon(position.coords.longitude);
@@ -44,7 +45,6 @@ function App() {
             const lon = json[0].lon
             console.log("Latitude is: " + lat);
             console.log("Longitude is: " + lon);
-
             return {lat, lon}
         }
         const fetchData = async(coords) => { 
@@ -56,11 +56,11 @@ function App() {
             const coords = await fetchCoords();
             const weatherData = await fetchData(coords);
             console.log(weatherData);
+            setLoading(false);
             setData(weatherData);
         }
-        // fetchBoth();
+        fetchBoth();
         console.log(data);
-        setLoading(false);
         //Borde köras varje gång som platsen ändras. 
     }, [location])
     const theme=  useDarkMode ? DarkTheme : LightTheme
