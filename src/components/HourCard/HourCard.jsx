@@ -3,6 +3,7 @@ import DateFormatter from "../../helpers/DateFormatter";
 import svgPicker from "../../helpers/svgPicker";
 import "./HourCard.css"
 import {useState} from "react";
+import DailyDetail from "../DailyDetail/DailyDetail";
 
 const HourCard = props => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -23,17 +24,16 @@ const HourCard = props => {
                         <Typography variant="body2" color="secondary" paragraph textAlign="center">
                             {dateFormatter.GetHour(date)}
                         </Typography>
-                        <Box component="img" src={svgPicker(props.data.weather[0].icon)} sx={{width: "50px", height:"50px"}} onClick={handleClick}/>
-                        <Popper id={id} open={open} anchorEl={anchorEl} >
-                            <Box sx={{backgroundColor:"white", borderRadius:"10px", color:"black", padding: "5px"}}> 
-                                <Typography paragraph>Feels like: {props.data.feels_like}&deg;C</Typography>
-                                <Typography paragraph>Humidity: {props.data.humidity}%</Typography>
-                                <Typography paragraph>UV index: {props.data.uvi}</Typography>
-                                <Typography paragraph>Risk of rain: {props.data.pop * 100}%</Typography>
-                                <Typography paragraph>Dew point: {props.data.dew_point}&deg;C</Typography>
-                                <Typography paragraph>Wind: {props.data.wind_speed}m/s</Typography>
-                                <Typography paragraph>Cloud coverage: {props.data.clouds}%</Typography>
-
+                        <Box component="img" src={svgPicker(props.data.weather[0].icon)} sx={{width: "50px", height:"50px"}} onMouseEnter={handleClick} onMouseLeave={handleClick}/>
+                        <Popper id={id} open={open} anchorEl={anchorEl}>
+                            <Box sx={{backgroundColor:"rgb(5, 39, 102)",width:"250px", border:"2px solid orange", borderRadius:"10px", color:"black", padding: "5px"}}> 
+                                <Typography sx={{color:"white"}} paragraph>Feels like: {props.data.feels_like}&deg;C</Typography>
+                                <DailyDetail img={svgPicker("arrow")} data={props.data.wind_speed} degrees={props.data.wind_deg} type="Wind"/>
+                                <DailyDetail img={svgPicker("riskOfRain")} data={props.data.pop * 100} type="Risk of rain"/>
+                                <DailyDetail img={svgPicker("humidity")} data={props.data.humidity} type="Humidity" />
+                                <DailyDetail img={svgPicker("pressure")} data={props.data.pressure} type="Pressure" />
+                                <DailyDetail img={svgPicker("uvindex")} data={props.data.uvi} type="UV index" />
+                                <DailyDetail img={svgPicker("dewpoint")} data={props.data.dew_point} type="Dew point" />
                             </Box>
 
 

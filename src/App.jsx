@@ -93,7 +93,6 @@ function App() {
     <ThemeProvider theme={theme}>
         <CssBaseline />
         <HeaderBar darkModeClick={handleDarkModeChange} darkMode={useDarkMode} handleLocationChange={handleLocationChange} />
-
         <Container sx={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
             {loading ? <HashLoader size={200} color={ useDarkMode ? "#36d7b7" : "#000000"} style={{}}/> : <WeatherContainer data={data} location={location}></WeatherContainer>}
 
