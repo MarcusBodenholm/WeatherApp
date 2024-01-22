@@ -17,8 +17,6 @@ function App() {
     const [loading, setLoading] = useState(true);
     const WeatherAPI = useFetch("https://api.openweathermap.org");
     const LocationAPI = useFetch("https://nominatim.openstreetmap.org/")
-    console.log(import.meta.env.VITE_SOME_KEY)
-
 
     const handleLocationChange = (newLocation) => {
         console.log(newLocation);
