@@ -27,7 +27,7 @@ const HourCard = props => {
                         <Box component="img" src={svgPicker(props.data.weather[0].icon)} sx={{width: "50px", height:"50px"}} onMouseEnter={handleClick} onMouseLeave={handleClick}/>
                         <Popper id={id} open={open} anchorEl={anchorEl}>
                             <Box sx={{backgroundColor:"rgb(5, 39, 102)",width:"250px", border:"2px solid orange", borderRadius:"10px", color:"black", padding: "5px"}}> 
-                                <Typography sx={{color:"white"}} paragraph>Feels like: {props.data.feels_like}&deg;C</Typography>
+                                <Typography sx={{color:"white", marginTop:"5px", marginBottom: "0px"}}textAlign="center" variant="h6" paragraph>Feels like: {Math.round(props.data.feels_like)}&deg;C</Typography>
                                 <DailyDetail img={svgPicker("arrow")} data={props.data.wind_speed} degrees={props.data.wind_deg} type="Wind"/>
                                 <DailyDetail img={svgPicker("riskOfRain")} data={props.data.pop * 100} type="Risk of rain"/>
                                 <DailyDetail img={svgPicker("humidity")} data={props.data.humidity} type="Humidity" />

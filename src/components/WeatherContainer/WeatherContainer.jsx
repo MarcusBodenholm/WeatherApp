@@ -12,7 +12,7 @@ const WeatherContainer = (props) => {
     return (
         <>
             <Typography sx={{marginTop:"15px"}} textAlign="center" variant="h5">{dateFormatter.WeekdayAndMonth(current)} {dateFormatter.FullTime(current)}</Typography>
-            <Typography sx={{marginBottom:"5px"}} textAlign="center" variant="h2">{props.location}</Typography>
+            <Typography sx={{marginBottom:"5px"}} textAlign="center" variant="h2">{props.data.location}</Typography>
             <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
                     <Stack direction="row" sx={{alignContent:"center", justifyContent:"center"}} spacing={2}>
