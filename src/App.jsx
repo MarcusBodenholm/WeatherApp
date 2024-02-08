@@ -13,7 +13,7 @@ function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark');
     const [useDarkMode, setDarkMode] = useState(prefersDarkMode);
     const [data, setData] = useState({});
-    const [location, setLocation] = useState("");
+    const [location, setLocation] = useState("Stockholm");
     const [loading, setLoading] = useState(true);
     const WeatherAPI = useFetch("https://api.openweathermap.org");
     const LocationAPI = useFetch("https://nominatim.openstreetmap.org/")
@@ -29,34 +29,34 @@ function App() {
     const handleDarkModeChange = () => {
         setDarkMode(!useDarkMode);
     }
-    useEffect(() => {
-        let geoLocationFailed = false;
-        const getCurrentPosition = async() => {
-            const coords = await new Promise((resolve, reject) => {
-                navigator.geolocation.getCurrentPosition(position => {
-                    resolve(position.coords);
-                },error => reject(error),{timeout: 1000});
-            })
-            .catch(() => geoLocationFailed = true)
-            return coords;
-        }
-        const reverseGeoCode = async() => {
-            const coords = await getCurrentPosition();
-            console.log(coords, "triggered with coords")
-            if (geoLocationFailed) {
-                setLocation("Stockholm");
-                return;
-            }
-            const json = await LocationAPI.get(`reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`)
-            if (json.address === undefined) {
-                setLocation("Stockholm");
-                return;
-            }
-            setLocation(json.address.town)
+    // useEffect(() => {
+    //     let geoLocationFailed = false;
+    //     const getCurrentPosition = async() => {
+    //         const coords = await new Promise((resolve, reject) => {
+    //             navigator.geolocation.getCurrentPosition(position => {
+    //                 resolve(position.coords);
+    //             },error => reject(error),{timeout: 1000});
+    //         })
+    //         .catch(() => geoLocationFailed = true)
+    //         return coords;
+    //     }
+    //     const reverseGeoCode = async() => {
+    //         const coords = await getCurrentPosition();
+    //         console.log(coords, "triggered with coords")
+    //         if (geoLocationFailed) {
+    //             setLocation("Stockholm");
+    //             return;
+    //         }
+    //         const json = await LocationAPI.get(`reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`)
+    //         if (json.address === undefined) {
+    //             setLocation("Stockholm");
+    //             return;
+    //         }
+    //         setLocation(json.address.town)
     
-        }
-        reverseGeoCode();
-    }, [])
+    //     }
+    //     reverseGeoCode();
+    // }, [])
     useEffect(() => {
         let subscribed = true;
         if (location === "") return;
@@ -72,7 +72,6 @@ function App() {
                 success: true,
                 location: json[0].name
             }
-            console.log(coords);
             return coords
         }
         const fetchData = async(coords) => { 
@@ -83,7 +82,6 @@ function App() {
         const fetchBoth = async() => {
             const coords = await fetchCoords();
             if (coords.success === false) {
-                console.log("Location could not be found. Defaulting to Stockholm.")
                 setLocation("Stockholm")
                 return;
             }
@@ -96,7 +94,6 @@ function App() {
             setData({...weatherData, location:coords.location});
         }
         fetchBoth();
-        console.log("Location is " + location)
         return (() => {
             subscribed = false;
         })
